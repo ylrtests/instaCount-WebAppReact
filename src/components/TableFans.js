@@ -1,10 +1,9 @@
 import React from "react";
 import { MDBDataTable } from 'mdbreact';
-import { Form, Button } from "react-bootstrap"
 
 class TableFans extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             columns: [
                 {
@@ -38,7 +37,23 @@ class TableFans extends React.Component {
             ],
             data: {}
         }
+
+        this.handleButtonClick = this.handleButtonClick.bind(this)
+    
     }
+
+    handleButtonClick(){
+
+        let formData = new FormData(document.getElementById('deleteFanForm'))
+        console.log(formData)
+
+        //     fetch('http://instacount:8080/api/fan/delete', {
+        //     method: 'post',
+        //     body: new FormData()
+        // }).then(res => res.json())
+        //     .then(res => console.log(res));
+    }
+
 
     componentDidMount() {
         console.log('hola')
@@ -46,14 +61,13 @@ class TableFans extends React.Component {
             .then(response => response.json())
             .then((myJson) => {
 
-
                 let rows = myJson.fans.map((row) => {
                     return ({
                         id: row.id,
                         username: row.username,
                         status: row.status,
                         postCount: row.postCount,
-                        url: [<a href={row.url} target="_blank" rel="noopener noreferrer">{row.url}</a>]
+                        url: [<a key={row.url} href={row.url} target="_blank" rel="noopener noreferrer">{row.url}</a>]
 
                     })
                 });
@@ -91,19 +105,21 @@ class TableFans extends React.Component {
                     </div>
                                 
                     <br style={{borderWidth: "2px"}}/>       
-                    <div className="row">
-                        <div className="col-3">
-                            <Form>
+                    {/* <div className="row">
+                        <div className="col-md-3">
+                            <Form id="deleteFanForm">
                                 <Form.Group controlId="formFansDelete">
                                     <Form.Label>Número máximo de likes</Form.Label>
                                     <Form.Control type="text" placeholder="Digite número" />
                                 </Form.Group>
-                                <Button variant="danger" type="submit">
+                                <Button 
+                                    variant="danger"
+                                    onClick={this.handleButtonClick}>
                                     ELiminar
                                 </Button>
                             </Form>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
             </div>
