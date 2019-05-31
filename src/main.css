@@ -17,14 +17,19 @@
     border:1px solid #e6e6e6;
 }
 
+@media(max-height: 500px){
+    .container-fluid.full-vph{
+        height: 100%;
+    }
+
+    .login-form{
+        margin: 10px
+    }
+}
+
 @media(max-width: 430px){
     .login-form{
-        border-radius: 10px;
         background-color: whitesmoke;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        width: 300px;
-        height: 500px;
+        border: 0px solid #e6e6e6;
     }
 }
