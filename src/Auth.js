@@ -18,6 +18,8 @@ class Auth {
     
     logout(){
         this.authenticated = false
+        localStorage.removeItem('token')
+        //Eliminar token de API
     }
 
     me(){
