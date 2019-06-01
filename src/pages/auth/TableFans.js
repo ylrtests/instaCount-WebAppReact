@@ -1,5 +1,7 @@
 import React from "react";
 import { MDBDataTable } from 'mdbreact';
+import axios from "axios"
+import {URL, getToken} from "../../Helpers"
 
 class TableFans extends React.Component {
     constructor(props) {
@@ -32,14 +34,11 @@ class TableFans extends React.Component {
                     sort: 'asc'
                 }
             ],
-            rows: [
+            fans: [
 
             ],
-            data: {}
         }
-
         this.handleButtonClick = this.handleButtonClick.bind(this)
-    
     }
 
     handleButtonClick(){
@@ -55,32 +54,77 @@ class TableFans extends React.Component {
     }
 
 
-    componentDidMount() {
-        console.log('hola')
-        fetch('http://instacount:8080/api/fan')
-            .then(response => response.json())
-            .then((myJson) => {
+    // componentDidMount() {
+    //     console.log('hola')
+    //     fetch('http://instacount:8080/api/fan')
+    //         .then(response => response.json())
+    //         .then((myJson) => {
+    //             console.log(myJson)
+    //             let rows = myJson.fans.map((row) => {
+    //                 return ({
+    //                     id: row.id,
+    //                     username: row.username,
+    //                     status: row.status,
+    //                     postCount: row.postCount,
+    //                     url: [<a key={row.url} href={row.url} target="_blank" rel="noopener noreferrer">{row.url}</a>]
 
-                let rows = myJson.fans.map((row) => {
-                    return ({
-                        id: row.id,
-                        username: row.username,
-                        status: row.status,
-                        postCount: row.postCount,
-                        url: [<a key={row.url} href={row.url} target="_blank" rel="noopener noreferrer">{row.url}</a>]
+    //                 })
+    //             });
 
-                    })
-                });
+    //             console.log('---')
+    //             this.setState({
+    //                 data: {
+    //                     columns: this.state.columns,
+    //                     rows: rows
+    //                 },
+    //                 rows: rows
+    //             })
+    //         })
+    // }
 
-                console.log('---')
-                this.setState({
-                    data: {
-                        columns: this.state.columns,
-                        rows: rows
-                    },
-                    rows: rows
+    componentDidMount(){
+        this._mounted = true
+        console.log("Se monto tabla...")
+
+        axios({
+            method: "GET",
+            url: URL + "/fan",
+            headers: {
+                "Authorization": 'bearer ' + getToken(),
+            }
+        }).then( (response) => {
+
+            let datos = response.data;
+            let newFans = datos.fans.map((row) => {
+                return ({
+                    id: row.id,
+                    username: row.username,
+                    status: row.status,
+                    postCount: row.postCount,
+                    url: [<a key={row.url} href={row.url} target="_blank" rel="noopener noreferrer">{row.url}</a>]
+
                 })
             })
+
+            console.log(newFans)
+
+            // this._mounted se usa para no alterar el state en caso de que
+            // el componente se haya cerrado...
+
+            if (datos.success && this._mounted) {
+                console.log('---')
+                this.setState({
+                    fans: newFans,
+                    data: {
+                        columns: this.state.columns,
+                        rows: newFans
+                    }
+                })
+            }
+            else {
+                //console.log("success falso");
+            }
+        })
     }
 
 
@@ -88,7 +132,6 @@ class TableFans extends React.Component {
 
         console.log('Render')
         console.log(this.state.data)
-        console.log(this.state.rows)
         return (
             <div>
                 <MDBDataTable
@@ -124,6 +167,10 @@ class TableFans extends React.Component {
 
             </div>
         )
+    }
+
+    componentWillUnmount(){
+        this._mounted = false
     }
 
 }

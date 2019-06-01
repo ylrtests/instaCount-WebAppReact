@@ -1,19 +1,23 @@
 import React from "react"
-import {Route} from "react-router-dom"
+import { Route } from "react-router-dom"
 import auth from "../Auth"
- 
-const AuthRoute = ({component: Component, ...rest}) => {
-    return(
-        <Route {...rest} render={ (props) => {
-            if(auth.isAuthenticated()){
+import LoadingIcon from "./LoadingIcon"
+
+const AuthRoute = ({ component: Component, ...rest }) => {
+    return (
+        <Route {...rest} render={(props) => {
+            if (auth.isAuthenticated()) {
                 return <Component {...props} />
             }
-            else{
+            else {
                 auth.logout()
-                return <div>No está autenticado</div>
-                        //this.props.history.go('/')
+                return (
+                    <div className="container-fluid full-vph">
+                        <LoadingIcon type="ellipsis" />
+                    </div>
+                )
             }
-        }}/>
+        }} />
     )
 }
 

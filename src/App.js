@@ -4,11 +4,13 @@ import AuthRoute from "./components/AuthRoute"
 import auth from "./Auth"
 import axios from "axios"
 import { URL, getToken } from "./Helpers"
+import LoadingIcon from "./components/LoadingIcon"
 
 import Login from "./pages/Login"
+import Logout from "./pages/Logout"
 import Home from "./pages/Home"
 import AuthHome from "./pages/auth/AuthHome"
-// import TableFans from "./components/TableFans"
+import Fans from "./pages/auth/Fans"
 
 
 class App extends React.Component {
@@ -62,7 +64,9 @@ class App extends React.Component {
 
     if (this.state.isLoading) {
       return (
-        <div>Cargando...</div>
+        <div className="container-fluid full-vph">
+          <LoadingIcon type="ellipsis" />
+        </div>
       )
     }
     //Ya hay respuesta de axios para saber si el user está autenticado
@@ -74,7 +78,7 @@ class App extends React.Component {
             <BrowserRouter>
               <Switch>
                 <AuthRoute path="/" exact component={AuthHome} />
-                <AuthRoute path="/tabla" exact component={() => (<div>Tabla</div>)} />
+                <AuthRoute path="/fans" exact component={Fans} />
                 <Route path="/logout" exact component={Logout} />
                 <Route render={() => <Redirect to="/" />} />
               </Switch>
@@ -102,17 +106,5 @@ class App extends React.Component {
 
 }
 
-class Logout extends React.Component {
-
-  componentDidMount() {
-    auth.logout()
-    this.props.history.go("/")
-  }
-  render() {
-    return (
-      <div>Cerrando sesión...</div>
-    )
-  }
-}
 
 export default App
