@@ -1,10 +1,10 @@
 import React from "react"
 import Header from "../../components/Header"
 
-class AuthHome extends React.Component{
+class AuthHome extends React.Component {
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <Header />
                 <h1>Home logged</h1>

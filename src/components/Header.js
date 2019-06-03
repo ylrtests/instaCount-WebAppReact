@@ -6,7 +6,6 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
@@ -41,13 +40,13 @@ class Header extends React.Component {
                                 <Link className="nav-link" to="/fans">Fans</Link>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                                <Link className="nav-link" to="/posts">Posts</Link>
                             </NavItem>
-                            <UncontrolledDropdown nav inNavbar>
+                            <UncontrolledDropdown direction="left"  nav inNavbar>
                                 <DropdownToggle nav caret>
                                     Opciones
                                 </DropdownToggle>
-                                <DropdownMenu right>
+                                <DropdownMenu>
                                     <DropdownItem>
                                         Option 1
                                 </DropdownItem>

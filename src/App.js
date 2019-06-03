@@ -11,6 +11,7 @@ import Logout from "./pages/Logout"
 import Home from "./pages/Home"
 import AuthHome from "./pages/auth/AuthHome"
 import Fans from "./pages/auth/Fans"
+import Posts from "./pages/auth/Posts"
 
 
 class App extends React.Component {
@@ -79,6 +80,7 @@ class App extends React.Component {
               <Switch>
                 <AuthRoute path="/" exact component={AuthHome} />
                 <AuthRoute path="/fans" exact component={Fans} />
+                <AuthRoute path="/posts" exact component={Posts} />
                 <Route path="/logout" exact component={Logout} />
                 <Route render={() => <Redirect to="/" />} />
               </Switch>
