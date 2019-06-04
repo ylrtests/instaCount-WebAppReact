@@ -3,6 +3,10 @@ import Header from "../../components/Header"
 import { URL, getToken } from "../../Helpers"
 import axios from "axios"
 import PostContainer from "./PostContainer"
+import PostDetails from "./PostDetails"
+import { Route } from "react-router-dom"
+
+
 
 
 class Posts extends React.Component {
@@ -18,7 +22,10 @@ class Posts extends React.Component {
 
         this.listPostsComponent = this.listPostsComponent.bind(this)
         this.storeRows = this.storeRows.bind(this)
+        this.handleVerDetallesPost = this.handleVerDetallesPost.bind(this)
     }
+
+
 
     componentDidMount() {
         axios({
@@ -48,13 +55,13 @@ class Posts extends React.Component {
     }
 
     listPostsComponent(e) {
-        return <PostContainer key={e.id} id_insta={e.id_insta} />
+        return <PostContainer onVerDetallesPost={() => this.handleVerDetallesPost(e.id_insta)} key={e.id} id_insta={e.id_insta} fans_count={e.fans_count} />
     }
 
-    storeRows(posts, key){
-        let postsForRow = posts.splice(0,3)
-        
-        if(postsForRow.length === 1){
+    storeRows(posts, key) {
+        let postsForRow = posts.splice(0, 3)
+
+        if (postsForRow.length === 1) {
             return (
                 <div className="posts-row" key={key}>
                     {postsForRow}
@@ -63,7 +70,7 @@ class Posts extends React.Component {
                 </div>
             )
         }
-        else if(postsForRow.length === 2){
+        else if (postsForRow.length === 2) {
             return (
                 <div className="posts-row" key={key}>
                     {postsForRow}
@@ -77,6 +84,11 @@ class Posts extends React.Component {
                 {postsForRow}
             </div>
         )
+    }
+
+    handleVerDetallesPost(id_insta) {
+        console.log("Llego este ID")
+        console.log(id_insta)
     }
 
     render() {
@@ -95,36 +107,22 @@ class Posts extends React.Component {
                 let row = this.storeRows(posts, i)
                 rows.push(row)
             }
-            
 
             return (
                 <div>
                     <Header />
                     <div className="container-fluid">
+                        <div className="row justify-content-center">
+                            <button className="btn btn-success">Agregar nuevo post</button>
+                        </div>
                         <div className="posts">
                             {rows}
-
-                            {/* <div className="posts-row">
-                                <div className="posts-child">
-                                    <img src="https://www.instagram.com/p/Bxd1GhClLhB/media?size=l" alt="" />
-                                </div>
-                                <div className="posts-child">
-                                    <img src="https://www.instagram.com/p/BxOUrgylsbZ/media?size=l" alt="" />
-                                </div>
-                                <div className="posts-child">
-                                    <img src="https://www.instagram.com/p/Br1TgMxFF0i/media?size=l" alt="" />
-                                </div>
-                            </div> */}
-
                         </div>
                     </div>
+                    <Route path="/posts/:id_insta" exact component={PostDetails} />
                 </div>
             )
-
-
         }
-
-
     }
 }
 

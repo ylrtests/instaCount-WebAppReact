@@ -1,17 +1,18 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom"
-import AuthRoute from "./components/AuthRoute"
 import auth from "./Auth"
 import axios from "axios"
 import { URL, getToken } from "./Helpers"
-import LoadingIcon from "./components/LoadingIcon"
 
+import AuthRoute from "./components/AuthRoute"
+import LoadingIcon from "./components/LoadingIcon"
 import Login from "./pages/Login"
 import Logout from "./pages/Logout"
 import Home from "./pages/Home"
 import AuthHome from "./pages/auth/AuthHome"
 import Fans from "./pages/auth/Fans"
 import Posts from "./pages/auth/Posts"
+// import PageError from "./pages/PageError"
 
 
 class App extends React.Component {
@@ -64,6 +65,7 @@ class App extends React.Component {
   render() {
 
     if (this.state.isLoading) {
+      console.log("esta cargando...")
       return (
         <div className="container-fluid full-vph">
           <LoadingIcon type="ellipsis" />
@@ -72,18 +74,21 @@ class App extends React.Component {
     }
     //Ya hay respuesta de axios para saber si el user está autenticado
     else {
-
       if (auth.isAuthenticated()) {
         return (
           <div>
             <BrowserRouter>
+                {/* <AuthRoute path="/posts/:id_insta" exact component={PostDetails} />
+                <Route path="/posts/:id_insta/*"  render={() => <Redirect to="/posts" />} /> */}
+                
               <Switch>
+                <AuthRoute path="/posts" component={Posts} />
                 <AuthRoute path="/" exact component={AuthHome} />
                 <AuthRoute path="/fans" exact component={Fans} />
-                <AuthRoute path="/posts" exact component={Posts} />
                 <Route path="/logout" exact component={Logout} />
                 <Route render={() => <Redirect to="/" />} />
               </Switch>
+
             </BrowserRouter>
           </div>
         );

@@ -42,7 +42,7 @@ class Header extends React.Component {
                             <NavItem>
                                 <Link className="nav-link" to="/posts">Posts</Link>
                             </NavItem>
-                            <UncontrolledDropdown direction="left"  nav inNavbar>
+                            <UncontrolledDropdown  nav inNavbar>
                                 <DropdownToggle nav caret>
                                     Opciones
                                 </DropdownToggle>

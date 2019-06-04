@@ -5,7 +5,6 @@ import { Formik, Form, Field } from "formik"
 import * as Yup from 'yup'
 import SweetAlert from "sweetalert-react"
 import auth from "../Auth"
-import "../main.css"
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string()
