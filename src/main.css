@@ -45,28 +45,36 @@
     position: relative;
 }
 
-.posts-child img {
+.post-img{
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    background-position: center;
+    background-size: cover;
+}
+.post-img:hover {
+    background-color:rgba(0, 0, 0, 0.3);
+    
 }
 
-.posts-child img:hover {
-    opacity: 0.5;
-}
-
-.post-tag{
-    float: left;
+.post-img:before {
     position: absolute;
-    left: 0px;
-    top: 0px;
-    z-index: 2;
-    background-color: #92AD40;
-    padding: 5px;
-    color: #FFFFFF;
-    font-weight: bold;
-    font-size: 2.5vh;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background-color: inherit;
+    content: ' ';
 }
+.post-tag{
+    width: 100%;
+    height: 100%;
+    font-size: 1em;
+    padding: 5px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
 @media(max-height: 500px){
     .container-fluid.full-vph{

@@ -55,7 +55,9 @@ class Posts extends React.Component {
     }
 
     listPostsComponent(e) {
-        return <PostContainer onVerDetallesPost={() => this.handleVerDetallesPost(e.id_insta)} key={e.id} id_insta={e.id_insta} fans_count={e.fans_count} />
+        let lastIndex = e.updated_at.lastIndexOf(" ");
+        let reducedString = e.updated_at.substring(0, lastIndex);
+        return (<PostContainer onVerDetallesPost={() => this.handleVerDetallesPost(e.id_insta)} key={e.id} id_insta={e.id_insta} fans_count={e.fans_count} updated_at={reducedString} />)
     }
 
     storeRows(posts, key) {
