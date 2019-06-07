@@ -47,23 +47,12 @@ class PostContainer extends React.Component {
         return (
             <div className="posts-child">
                 <Link to={hrefURL} className="post-link">
-
                     <div className="post-img" 
                         onMouseEnter = { () => this.handleOnMouseEnter()}
                         onMouseLeave = { () => this.handleOnMouseLeave()}
                         style={{ backgroundImage: "url(" + imgURL + ")"}}>
                         {detailsImg}
                     </div>
-
-                    {/* <img src={imgURL} alt="img" /> */}
-                    {/* <div className="post-tag">{this.props.fans_count}</div> */}
-                    {/* <div className="post-tag">{this.props.fans_count}</div> */}
-                    {/* <div className="post-tag">
-                        <span>
-
-                            {this.props.updated_at}
-                        </span>
-                    </div> */}
                 </Link>
             </div>
         )
