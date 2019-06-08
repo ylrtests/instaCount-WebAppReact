@@ -4,23 +4,12 @@ import axios from "axios"
 import { URL, getToken } from "../../Helpers"
 import { Formik, Form, Field } from "formik"
 import * as Yup from "yup"
+import PostAddLikes from "./PostAddLikes"
 
 const PostDetailsSchema = Yup.object().shape({
     id_insta: Yup.string().required("Id requerido"),
     date: Yup.string().required("Fecha requerida")
 })
-
-// const DatePickerField = ({ name, value, onChange }) => {
-//     return (
-//         <DatePicker
-//             selected={(value && new Date(value)) || null}
-//             onChange={val => {
-//                 onChange(name, val);
-//             }}
-//         />
-//     );
-// }
-
 
 class PostDetails extends React.Component {
 
@@ -31,7 +20,6 @@ class PostDetails extends React.Component {
             postToShowInModal: {},
             isLoading: true,
             openAddLikes: false,
-            showLoadingAddLikes: false,
             scriptInText: ""
         }
 
@@ -39,8 +27,6 @@ class PostDetails extends React.Component {
         this.goBackToPostsFromModal = this.goBackToPostsFromModal.bind(this)
         this.handleGuardarCambios = this.handleGuardarCambios.bind(this)
         this.openAddLikes = this.openAddLikes.bind(this)
-        this.storeAddLikes = this.storeAddLikes.bind(this)
-        this.afterSuccessAddLikes = this.afterSuccessAddLikes.bind(this)
     }
 
 
@@ -80,7 +66,7 @@ class PostDetails extends React.Component {
     }
 
     openAddLikes() {
-        let url = "https://www.instagram.com/p/" + this.state.postToShowInModal.id_insta
+        let url = "https://www.instagram.com/p/" + this.state.postToShowInModal.id_insta + "/liked_by/"
         this.externalWindow = window.open(url, '_blank', "width=360,height=500,left=10")
         fetch("/js/listaLikes.txt")
             .then(response => response.text())
@@ -92,43 +78,11 @@ class PostDetails extends React.Component {
             })
     }
 
-    storeAddLikes(values) {
-        let objetoJson = JSON.parse(values.jsontext)
-        console.log("En json")
-        console.log(objetoJson)
-
+    handleShowIsLoadingAddLikesModal(){
+        console.log("Cambiare showIsLoadingAddLikesModal")
         this.setState({
-            showLoadingAddLikes: true
+            showIsLoadingAddLikesModal: false
         })
-
-        axios({
-            method: "POST",
-            url: URL + "/post/add/likes",
-            headers: {
-                "Authorization": "bearer " + getToken(),
-                "Content-Type": "application/json"
-            },
-            data: objetoJson
-        }).then((response) => {
-            let data = response.data
-            console.log(data)
-
-            if (data.success) {
-                this.afterSuccessAddLikes(data)
-            }
-            else {
-                console.log("error success ")
-            }
-
-        }).catch((error) => {
-            console.log("error: " + error)
-        })
-    }
-
-    afterSuccessAddLikes(data) {
-        console.log("Se añadieron...")
-        this.props.history.push("/posts")
-        this.props.history.go("/posts")
     }
 
     render() {
@@ -136,61 +90,19 @@ class PostDetails extends React.Component {
         console.log(this.state.postToShowInModal)
 
         if (this.state.openAddLikes) {
-
-            let formJsonObject = this.state.showLoadingAddLikes
-                ? <ModalBody>
-                    <div>Cargando...</div>
-                </ModalBody>
-                : <Formik
-                    enableReinitialize={true}
-                    onSubmit={(values) => {
-                        if (values.jsontext) { this.storeAddLikes(values) }
-                    }}
-                    initialValues={{
-                        jsontext: undefined
-                    }}
-                >
-                    <Form>
-                        <ModalBody>
-                            <div className="form-group">
-                                <label htmlFor="textareaJS">Script en JS</label>
-                                <div className="row">
-                                    <div className="col-md-8">
-                                        <textarea className="form-control" id="textareaJS" name="textareaJS" rows="1">
-                                            {this.state.scriptInText}
-                                        </textarea>
-                                    </div>
-                                    <div className="col-md-2">
-                                        <button className="btn btn-success" onClick={ () => {
-                                            var copyText = document.getElementById("textareaJS");
-                                            copyText.select();
-                                            document.execCommand("copy");
-                                            alert("Se ha copiado el texto.");
-                                        }}>Copiar</button>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="jsontext">Objeto en formato JSON</label>
-                                <Field className="form-control" rows="10" component="textarea" name="jsontext" />
-                            </div>
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button color="primary" type="submit">Enviar likes</Button>
-                        </ModalFooter>
-                    </Form>
-                </Formik>
-
             return (
                 <div>
                     <Modal isOpen={true} toggle={this.goBackToPostsFromModal}>
                         <ModalHeader toggle={this.goBackToPostsFromModal}> Añadir likes: {this.state.postToShowInModal.id_insta}</ModalHeader>
-                        {formJsonObject}
+                        <PostAddLikes 
+                            scriptInText = {this.state.scriptInText}
+                            history = {this.props.history}
+                        />
                     </Modal>
                 </div>
             )
         }
+
         else {  //start else
             let formReadyToLoad = this.state.isLoading
                 ? <ModalBody>
