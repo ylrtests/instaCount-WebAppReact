@@ -31,26 +31,36 @@
 }
 
 .posts-child{
+    width: 50%; /*to match ratio*/
     max-width: 280px;
     max-height: 280px;
     border: 1px solid #f6f6f6;
-    width: 30vw;
-    height: 30vw;
     min-width: 90px;
     min-height: 90px;
 
     background-color: white;
-    flex-basis: 1;
+    flex: 1 1 auto;
     overflow: hidden;
     position: relative;
 }
 
+.posts-child:before{
+	content: "";
+	display: block;
+	padding-top: 100%; 	/* initial ratio of 1:1*/
+}
+
 .post-img{
-    width: 100%;
-    height: 100%;
+    position:  absolute;  /* adjust content to match ratio*/
+	top: 0;
+	left: 0;
+	bottom: 0;
+    right: 0;
+    
     background-position: center;
     background-size: cover;
 }
+
 .post-img:hover {
     background-color:rgba(0, 0, 0, 0.3);
     
@@ -62,6 +72,7 @@
     background-color: inherit;
     content: ' ';
 }
+
 .post-tag{
     width: 100%;
     height: 100%;

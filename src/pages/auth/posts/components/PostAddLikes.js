@@ -1,6 +1,6 @@
 import React from "react"
 import axios from "axios"
-import { URL, getToken } from "../../Helpers"
+import { URL, getToken } from "../../../../Helpers"
 import { Formik, Form, Field } from "formik"
 import { Button, ModalBody, ModalFooter } from 'reactstrap'
 
@@ -37,7 +37,7 @@ class PostAddLikes extends React.Component {
             console.log(data)
 
             if (data.success) {
-                this.afterSuccessAddLikes(data)
+                this.afterSuccessAddLikes()
             }
             else {
                 console.log("error success ")
@@ -48,13 +48,14 @@ class PostAddLikes extends React.Component {
         })
     }
 
-    afterSuccessAddLikes(data) {
+    afterSuccessAddLikes() {
         console.log("Se añadieron...")
         this.props.history.push("/posts")
         this.props.history.go("/posts")
     }
 
     render() {
+        console.log("render postt add likes")
         let elementToShow = this.state.sendingUsersAndLikes
             ? <ModalBody>
                 <div>Cargando...</div>

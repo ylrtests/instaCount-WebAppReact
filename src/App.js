@@ -10,9 +10,8 @@ import Login from "./pages/Login"
 import Logout from "./pages/Logout"
 import Home from "./pages/Home"
 import AuthHome from "./pages/auth/AuthHome"
-import Fans from "./pages/auth/Fans"
-import Posts from "./pages/auth/Posts"
-// import PageError from "./pages/PageError"
+import Fans from "./pages/auth/fans/Fans"
+import Posts from "./pages/auth/posts/Posts"
 
 
 class App extends React.Component {
@@ -26,7 +25,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount()")
     //Si existe token en localStorage, intenta obtener usuario.
     if (getToken()) {
       axios({
@@ -65,7 +63,6 @@ class App extends React.Component {
   render() {
 
     if (this.state.isLoading) {
-      console.log("esta cargando...")
       return (
         <div className="container-fluid full-vph">
           <LoadingIcon type="ellipsis" />
@@ -84,7 +81,7 @@ class App extends React.Component {
               <Switch>
                 <AuthRoute path="/posts" component={Posts} />
                 <AuthRoute path="/" exact component={AuthHome} />
-                <AuthRoute path="/fans" exact component={Fans} />
+                <AuthRoute path="/fans"  component={Fans} />
                 <Route path="/logout" exact component={Logout} />
                 <Route render={() => <Redirect to="/" />} />
               </Switch>

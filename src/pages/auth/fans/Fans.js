@@ -1,11 +1,11 @@
 import React from "react"
-import Header from "../../components/Header"
-import TableFans from "./TableFans"
+import Header from "../../../components/Header"
+import TableFans from "./components/TableFans"
 
-class Fans extends React.Component{
+class Fans extends React.Component {
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <Header />
                 <div className="container-fluid">

@@ -1,10 +1,11 @@
 import React from "react"
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import axios from "axios"
-import { URL, getToken } from "../../Helpers"
+import { URL, getToken } from "../../../Helpers"
 import { Formik, Form, Field } from "formik"
 import * as Yup from "yup"
-import PostAddLikes from "./PostAddLikes"
+import PostAddLikes from "./components/PostAddLikes"
+
 
 const PostDetailsSchema = Yup.object().shape({
     id_insta: Yup.string().required("Id requerido"),
@@ -25,8 +26,8 @@ class PostDetails extends React.Component {
 
         this.externalWindow = undefined
         this.goBackToPostsFromModal = this.goBackToPostsFromModal.bind(this)
-        this.handleGuardarCambios = this.handleGuardarCambios.bind(this)
         this.openAddLikes = this.openAddLikes.bind(this)
+        //this.handleGuardarCambios = this.handleGuardarCambios.bind(this)
     }
 
 
@@ -61,9 +62,10 @@ class PostDetails extends React.Component {
         this.props.history.push("/posts")
     }
 
-    handleGuardarCambios(values) {
+    //En construcción
+    // handleGuardarCambios(values) {
 
-    }
+    // }
 
     openAddLikes() {
         let url = "https://www.instagram.com/p/" + this.state.postToShowInModal.id_insta + "/liked_by/"
@@ -78,7 +80,7 @@ class PostDetails extends React.Component {
             })
     }
 
-    handleShowIsLoadingAddLikesModal(){
+    handleShowIsLoadingAddLikesModal() {
         console.log("Cambiare showIsLoadingAddLikesModal")
         this.setState({
             showIsLoadingAddLikesModal: false
@@ -94,9 +96,9 @@ class PostDetails extends React.Component {
                 <div>
                     <Modal isOpen={true} toggle={this.goBackToPostsFromModal}>
                         <ModalHeader toggle={this.goBackToPostsFromModal}> Añadir likes: {this.state.postToShowInModal.id_insta}</ModalHeader>
-                        <PostAddLikes 
-                            scriptInText = {this.state.scriptInText}
-                            history = {this.props.history}
+                        <PostAddLikes
+                            scriptInText={this.state.scriptInText}
+                            history={this.props.history}
                         />
                     </Modal>
                 </div>

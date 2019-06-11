@@ -5,7 +5,6 @@ const LoadingIcon = (props) => {
 
     switch (props.type) {
         case "ellipsis":
-            console.log("Retorno ellipsis")
             return (
                 <object width="100" height="100" type="image/svg+xml" data="/img/loading-ellipsis.svg"> </object>
             )
