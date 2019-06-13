@@ -56,8 +56,8 @@ class Posts extends React.Component {
         else {
             return (
                 <div>
-                    <Header />
-                    <div className="container-fluid">
+                    <Header pathname={this.props.location.pathname}/>
+                    <div className="container-fluid  mt-4">
                         <div className="row justify-content-center">
                             <Link to="/posts/create">
                                 <button className="btn btn-success" type="button">

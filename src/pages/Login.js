@@ -30,9 +30,11 @@ class Login extends React.Component {
         }
 
         this.handleLogin = this.handleLogin.bind(this)
+        this.refButton = React.createRef();
     }
 
     handleLogin(values) {
+        this.refButton.current.setAttribute("disabled","")
         axios({
             method: 'post',
             url: URL + '/login',
@@ -55,6 +57,7 @@ class Login extends React.Component {
                     sweetAlertTitle: "",
                     sweetAlertText: data.message
                 })
+                this.refButton.current.removeAttribute("disabled")
             }
 
         }).catch((error) => {
@@ -65,6 +68,7 @@ class Login extends React.Component {
                 sweetAlertTitle: "",
                 sweetAlertText: "Error: " + error
             })
+            this.refButton.current.removeAttribute("disabled")
         })
     }
 
@@ -110,7 +114,7 @@ class Login extends React.Component {
                                         : null}
                                 </div>
 
-                                <button className="btn btn-success" style={{ width: "100%" }} type="subtmit">Iniciar sesión</button>
+                                <button ref={this.refButton} className="btn btn-success" style={{ width: "100%" }} type="subtmit">Iniciar sesión</button>
                             </Form>
 
                             <div className="mb-4 mt-4 border-bottom"></div>

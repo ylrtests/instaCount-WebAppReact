@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import axios from "axios"
 import { URL, getToken } from "../../../Helpers"
 import { Formik, Form, Field } from "formik"
@@ -21,9 +21,12 @@ class PostCreate extends React.Component {
 
         this.handleGuardarNuevoPost = this.handleGuardarNuevoPost.bind(this)
         this.goBackToPostsFromModal = this.goBackToPostsFromModal.bind(this)
+        this.refButton = React.createRef()
     }
 
     handleGuardarNuevoPost(values) {
+        this.refButton.current.setAttribute("disabled","")
+
         this.setState({
             isSavingPost: true
         })
@@ -46,9 +49,11 @@ class PostCreate extends React.Component {
             }
             else {
                 console.log("todo mal")
+                this.refButton.current.removeAttribute("disabled")
             }
         }).catch((error) => {
             console.log("Error en Post add: " + error)
+            this.refButton.current.removeAttribute("disabled")
         })
 
     }
@@ -89,7 +94,7 @@ class PostCreate extends React.Component {
                             </div>
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="success" type="submit">Guardar post</Button>{' '}
+                            <button ref={this.refButton} className="btn btn-success" type="submit">Guardar post</button>
                         </ModalFooter>
                     </Form>
                 )}

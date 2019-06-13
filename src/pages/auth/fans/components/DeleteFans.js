@@ -16,9 +16,11 @@ class DeleteFans extends React.Component {
     constructor(props) {
         super(props)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.refButton = React.createRef()
     }
 
     handleSubmit(values) {
+        this.refButton.current.setAttribute("disabled","")
         console.log(values)
         axios({
             method: "POST",
@@ -36,10 +38,12 @@ class DeleteFans extends React.Component {
             }
             else{
                 console.log("Error elimninando usuarios")
+                this.refButton.current.removeAttribute("disabled")
             }
 
         }).catch( (error) => {
             console.log(error)
+            this.refButton.current.removeAttribute("disabled")
         })
     }
 
@@ -69,7 +73,7 @@ class DeleteFans extends React.Component {
                                         <p className="text-danger">{errors.numero}</p>
                                         : null}
                                 </div>
-                                <button className="btn btn-danger" type="submit">Eliminar</button>
+                                <button ref={this.refButton} className="btn btn-danger" type="submit">Eliminar</button>
 
                             </Form>
                         )}

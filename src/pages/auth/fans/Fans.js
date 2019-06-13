@@ -12,12 +12,11 @@ class Fans extends React.Component {
     render() {
         return (
             <div>
-                <Header />
-                <div className="container-fluid">
-                    <h1>Fans</h1>
+                <Header pathname={this.props.location.pathname} />
+                <div className="container mt-4">
                     <TableFans />
-                    <DeleteFans history={this.props.history}/>
-                   
+                    <DeleteFans history={this.props.history} />
+
                     <Route exact path="/fans/:id" component={FansPosts} />
                 </div>
             </div>

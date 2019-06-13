@@ -6,7 +6,7 @@ class AuthHome extends React.Component {
     render() {
         return (
             <div>
-                <Header />
+                <Header pathname={this.props.location.pathname}/>
                 <h1>Home logged</h1>
             </div>
         )

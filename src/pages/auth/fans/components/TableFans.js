@@ -3,6 +3,7 @@ import { MDBDataTable } from 'mdbreact';
 import axios from "axios"
 import { URL, getToken } from "../../../../Helpers"
 import { Link } from "react-router-dom"
+import LoadingIcon from "../../../../components/LoadingIcon"
 
 class TableFans extends React.Component {
     constructor(props) {
@@ -35,9 +36,8 @@ class TableFans extends React.Component {
                     sort: 'asc'
                 }
             ],
-            fans: [
-
-            ],
+            fans: [],
+            isLoading: true
         }
     }
 
@@ -59,9 +59,9 @@ class TableFans extends React.Component {
 
                 return ({
                     id: row.id,
-                    username:<Link to={hrefURL}>{row.username}</Link>,
+                    username: <Link to={hrefURL}>{row.username}</Link>,
                     status: row.status,
-                    posts_count:  row.posts_count,
+                    posts_count: row.posts_count,
                     url: <a key={row.url} href={row.url} target="_blank" rel="noopener noreferrer">{row.url}</a>
 
                 })
@@ -77,7 +77,8 @@ class TableFans extends React.Component {
                     data: {
                         columns: this.state.columns,
                         rows: newFans
-                    }
+                    },
+                    isLoading: false
                 })
             }
             else {
@@ -88,6 +89,11 @@ class TableFans extends React.Component {
 
 
     render() {
+
+        let loadingIcon = this.state.isLoading
+            ? <LoadingIcon type="circle" />
+            : null
+
         return (
             <div>
                 <MDBDataTable
@@ -95,8 +101,12 @@ class TableFans extends React.Component {
                     bordered
                     data={this.state.data}
                 />
+                <div className="text-center">
+                    {loadingIcon}
+                </div>
             </div>
         )
+
     }
 
     componentWillUnmount() {
