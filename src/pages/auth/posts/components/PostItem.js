@@ -44,7 +44,7 @@ class PostItem extends React.Component {
         }
 
 
-        let imgURL = "https://www.instagram.com/p/" + this.props.id_insta + "/media?size=l"
+        let imgURL = "https://www.instagram.com/p/" + this.props.id_insta + "/media?size=m"
         let hrefURL = "/posts/show/" + this.props.id_insta
 
         return (

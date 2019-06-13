@@ -2,9 +2,7 @@ import React from "react";
 import { MDBDataTable } from 'mdbreact';
 import axios from "axios"
 import { URL, getToken } from "../../../../Helpers"
-import { Route, Link } from "react-router-dom"
-
-import FansPosts from "../FansPosts"
+import { Link } from "react-router-dom"
 
 class TableFans extends React.Component {
     constructor(props) {
@@ -29,7 +27,7 @@ class TableFans extends React.Component {
                 {
                     label: 'Posts-Count',
                     field: 'posts_count',
-                    sort: 'asc'
+                    sort: 'asc',
                 },
                 {
                     label: 'URL',
@@ -41,16 +39,7 @@ class TableFans extends React.Component {
 
             ],
         }
-        this.handleButtonClick = this.handleButtonClick.bind(this)
     }
-
-    handleButtonClick() {
-
-        let formData = new FormData(document.getElementById('deleteFanForm'))
-        console.log(formData)
-
-    }
-
 
     componentDidMount() {
         this._mounted = true
@@ -72,7 +61,7 @@ class TableFans extends React.Component {
                     id: row.id,
                     username:<Link to={hrefURL}>{row.username}</Link>,
                     status: row.status,
-                    posts_count: <Link to={hrefURL}>{row.posts_count}</Link>,
+                    posts_count:  row.posts_count,
                     url: <a key={row.url} href={row.url} target="_blank" rel="noopener noreferrer">{row.url}</a>
 
                 })
@@ -99,7 +88,6 @@ class TableFans extends React.Component {
 
 
     render() {
-
         return (
             <div>
                 <MDBDataTable
@@ -107,32 +95,6 @@ class TableFans extends React.Component {
                     bordered
                     data={this.state.data}
                 />
-                <div style={{ border: "2px outset whitesmoke", padding: "1em" }}>
-                    <div className="row">
-                        <div className="col">
-                            <h1>Eliminar Usuarios</h1>
-                            <p>Elimina los usuarios con estado none, que tengan máximo n cantidad de likes</p>
-                        </div>
-                    </div>
-
-                    <br style={{ borderWidth: "2px" }} />
-                    {/* <div className="row">
-                        <div className="col-md-3">
-                            <Form id="deleteFanForm">
-                                <Form.Group controlId="formFansDelete">
-                                    <Form.Label>Número máximo de likes</Form.Label>
-                                    <Form.Control type="text" placeholder="Digite número" />
-                                </Form.Group>
-                                <Button 
-                                    variant="danger"
-                                    onClick={this.handleButtonClick}>
-                                    ELiminar
-                                </Button>
-                            </Form>
-                        </div>
-                    </div> */}
-                </div>
-                    <Route exact path="/fans/:id" component={FansPosts}/>
             </div>
         )
     }

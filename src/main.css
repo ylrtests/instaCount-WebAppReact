@@ -32,8 +32,7 @@
 
 .posts-child{
     width: 50%; /*to match ratio*/
-    max-width: 280px;
-    max-height: 280px;
+    
     border: 1px solid #f6f6f6;
     min-width: 90px;
     min-height: 90px;
@@ -101,5 +100,11 @@
     .login-form{
         background-color: whitesmoke;
         border: 0px solid #e6e6e6;
+    }
+}
+
+@media(min-width: 900px){
+    .posts-child{
+        max-width: 22vw;
     }
 }

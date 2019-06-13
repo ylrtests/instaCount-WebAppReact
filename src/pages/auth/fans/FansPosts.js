@@ -11,6 +11,7 @@ class FanPosts extends React.Component {
 
         this.state = {
             fan: {},
+            posts: {},
             isLoading: true,
             numberOfRows: undefined
         }
@@ -32,16 +33,18 @@ class FanPosts extends React.Component {
             let data = response.data
 
             if (data.success && this._mounted) {
-                let numberOfRows = Math.ceil(data.fan.posts.length / 3)
+                let numberOfRows = Math.ceil(data.posts.length / 3)
 
                 this.setState({
                     fan: data.fan,
+                    posts: data.posts,
                     numberOfRows: numberOfRows,
                     isLoading: false
                 })
             }
             else {
                 console.log("Error success... Fan Posts")
+                console.log(data)
             }
         }).catch((error) => {
             console.log("errro..." + error)
@@ -60,7 +63,7 @@ class FanPosts extends React.Component {
             </ModalBody>
             : <ModalBody>
                 <PostsGridContainer
-                    posts={this.state.fan.posts}
+                    posts={this.state.posts}
                     numberOfRows={this.state.numberOfRows} 
                     requestedIn="FansPosts"/>
             </ModalBody>
