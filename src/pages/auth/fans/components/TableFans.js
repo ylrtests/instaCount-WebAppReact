@@ -58,8 +58,9 @@ class TableFans extends React.Component {
                 let hrefURL = "/fans/" + row.id
 
                 return ({
-                    id: row.id,
-                    username: <Link to={hrefURL}>{row.username}</Link>,
+                    id: <Link to={hrefURL}>{row.id}</Link>,
+                    // username: <Link to={hrefURL}>{row.username}</Link>,
+                    username: row.username,
                     status: row.status,
                     posts_count: row.posts_count,
                     url: <a key={row.url} href={row.url} target="_blank" rel="noopener noreferrer">{row.url}</a>
